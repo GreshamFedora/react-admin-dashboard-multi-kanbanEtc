@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-import { Navbar, Footer, Sidebar, Themesettings } from'./components';
+import { Navbar, Footer, Sidebar, Themesettings, ThemeSettings } from'./components';
 import { Ecommerce, Orders, Calendar, Employees, Stacked, Pyramid, Customers, Kanban, Area, Bar, Pie, Financial, ColorPicker, ColorMapping, Editor, Line } from'./pages';
 
 import { useStateContext } from './contexts/ContextProvider';
@@ -11,7 +11,7 @@ import { useStateContext } from './contexts/ContextProvider';
 import './App.css';
 
 const App = () => {
-  const { activeMenu } = useStateContext();
+  const { activeMenu, themeSettings, setThemeSettings } = useStateContext();
   
 
   return (
@@ -19,8 +19,12 @@ const App = () => {
       <div className='flex relative dark: bg-main-dark-bg'>
         <div className='fixed right-4 bottom-4' style={{ zIndex: '1000' }}>
           <TooltipComponent content="Settings" position="Top">
-            <button type="button" classname="text-3xl p-3 hover:drop-shadow-xl hover:bg-light-gray text-white" style={{ background: 'blue', borderRadius: '50%' }}>
-              <FiSettings/>
+            <button 
+              type="button" 
+              classname="text-3xl p-3 hover:drop-shadow-xl hover:bg-light-gray text-white" 
+              onClick={() => setThemeSettings(true)} 
+              style={{ background: 'blue', borderRadius: '50%' }}>
+              <FiSettings />
             </button>
           </TooltipComponent>
 
@@ -43,6 +47,8 @@ const App = () => {
             <Navbar />
           </div>
           <div>
+            {themeSettings && <ThemeSettings />}
+
             <Routes>
               {/* Dashboard */}
               <Route path="/" element={<Ecommerce />} />
